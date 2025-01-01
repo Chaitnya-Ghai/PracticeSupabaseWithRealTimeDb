@@ -386,15 +386,16 @@ fun uploadImageToSupabase(uri: Uri,position: Int){
                     Toast.LENGTH_SHORT
                 ).show()
                 dbReference.child(studentInfo.id?:"").removeValue()
+                studentAdapter?.notifyItemRemoved(position)
             }
         }
         alertDialog.show()    }
 
     override fun itemClicked(position: Int, model: StudentInfo) {
-        findNavController().navigate(R.id.action_studentFragment_to_detailFragment,
-            bundleOf("name" to model.name,
+            val bundle =bundleOf("name" to model.name,
             "class" to model.Class ,
-            "rollNo" to model.rollNo,"img" to model.imag))
+            "rollNo" to model.rollNo,"img" to model.imag)
+        findNavController().navigate(R.id.detailFragment, bundle)
         Toast.makeText(mainActivity, "chl rha hai", Toast.LENGTH_SHORT).show()
     }
 }

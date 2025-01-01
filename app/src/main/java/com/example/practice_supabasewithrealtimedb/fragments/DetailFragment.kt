@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.practice_supabasewithrealtimedb.MainActivity
 import com.example.practice_supabasewithrealtimedb.MyApplication
 import com.example.practice_supabasewithrealtimedb.R
@@ -56,7 +57,14 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        findNavController().popBackStack()
+        binding.textView.text=name
+        binding.textView2.text=Class
+        binding.textView3.text=rollNo
+        Glide.with(mainActivity)
+            .load(imag)
+            .placeholder(R.mipmap.no_image2)
+            .into(binding.imageView)
+        binding.imageButton.setOnClickListener { findNavController().popBackStack()}
     }
     companion object {
         /**
