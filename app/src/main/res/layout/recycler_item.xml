@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/materialCardView"
+    android:elevation="@dimen/_25sp"
+    android:layout_margin="@dimen/_25sp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="@dimen/_25sp"
+            android:layout_gravity="center"
+            android:src="@drawable/avatar"
+            android:id="@+id/imgV"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_25sp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/itemName"
+                android:hint="@string/name"
+                android:layout_margin="@dimen/_25sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/Class"
+                android:id="@+id/itemClass"
+                android:layout_margin="@dimen/_25sp"
+                app:layout_constraintTop_toBottomOf="@id/itemName"
+                app:layout_constraintStart_toStartOf="parent"/>"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_25sp"
+                android:id="@+id/deleteBtn"
+                android:text="@string/delete"
+                app:layout_constraintTop_toBottomOf="@+id/itemClass"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_25sp"
+                android:text="@string/update"
+                android:id="@+id/updateBtn"
+                app:layout_constraintTop_toBottomOf="@+id/itemClass"
+                app:layout_constraintEnd_toStartOf="@id/deleteBtn"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

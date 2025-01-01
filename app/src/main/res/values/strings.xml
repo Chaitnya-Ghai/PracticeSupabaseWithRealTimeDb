@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Practice-SupabaseWithRealTimeDb</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name">Name</string>
+    <string name="Class">Class</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+</resources>
