@@ -42,8 +42,8 @@ class StudentAdapter(var contex:StudentFragment,var array :ArrayList<StudentInfo
             .load(array[position].imag)
             .centerCrop()
             .into(holder.img)
-        holder.updaeBtn.setOnClickListener { studentInterface.UpdateOrDelete(position,array[position],0) }
-        holder.deleteBtn.setOnClickListener { studentInterface.UpdateOrDelete(position,array[position],1) }
+        holder.updaeBtn.setOnClickListener { studentInterface.Update(position) }
+        holder.deleteBtn.setOnClickListener { studentInterface.deleteClick(array[position],position) }
         holder.cardSelected.setOnClickListener { studentInterface.itemClicked(position,array[position]) }
 
 

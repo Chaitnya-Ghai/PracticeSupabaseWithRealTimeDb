@@ -79,7 +79,7 @@ class StudentFragment : Fragment(),StudentInterface{
     private val MANAGE_EXTERNAL_STORAGE_REQUEST_CODE = 101
 // image variables
     lateinit var imgUri:Uri
-    lateinit var publicUrl:String
+    var publicUrl:String?=null
 //
     lateinit var dialogBinding:CustomDialogBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -188,6 +188,7 @@ private fun requestManageExternalStoragePermission() {
 }
 
     private fun dialog(position: Int =-1){
+        dialogBinding = CustomDialogBinding.inflate(layoutInflater)
         val dialog = Dialog(mainActivity).apply {
             setContentView(dialogBinding.root)
             setCancelable(true)
@@ -305,11 +306,12 @@ fun uploadImageToSupabase(uri: Uri,position: Int){
                             val imageUrl = bucket.publicUrl(fileName)
                             val img = dialogBinding.imgDialog
                             publicUrl=imageUrl
+                            data(position)
                             Glide.with(mainActivity)
                                 .load(imageUrl)
                                 .placeholder(R.mipmap.no_image2)
                                 .into(img)
-                            data(position)
+
                         }
                     }
                 }
@@ -337,7 +339,6 @@ fun uploadImageToSupabase(uri: Uri,position: Int){
                 val update = hashMapOf<String,Any>(
                     "$key" to info)
                 dbReference.updateChildren(update)
-            studentAdapter?.notifyDataSetChanged()
                 Toast.makeText(mainActivity, "update", Toast.LENGTH_SHORT).show()
         }
         else{
@@ -360,35 +361,35 @@ fun uploadImageToSupabase(uri: Uri,position: Int){
         return inputStream?.readBytes() ?: ByteArray(0)
     }
 
-    override fun UpdateOrDelete(position: Int, model: StudentInfo, deletekey: Int) {
-        if (deletekey==0){
-            dialog(position)
-            Toast.makeText(mainActivity, "position:${position}", Toast.LENGTH_SHORT).show()
-        }
-        if (deletekey==1){
-            val alertDialog = AlertDialog.Builder(mainActivity)
-            alertDialog.setTitle("Delete Item")
-            alertDialog.setMessage("Do you want to delete the item?")
-            alertDialog.setCancelable(false)
-            alertDialog.setNegativeButton("No") { _, _ ->
-                alertDialog.setCancelable(true)
-            }
-            alertDialog.setPositiveButton("Yes") { _, _ ->
-                if (array.size == 0){
-                    Toast.makeText(mainActivity, "List Is Empty", Toast.LENGTH_SHORT).show()
-                }
-                else {
-                    Toast.makeText(
-                        mainActivity,
-                        "The item is  deleted",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    dbReference.child(model.id?:"").removeValue()
-                }
-            }
-            alertDialog.show()
-        }
+
+
+    override fun Update(position: Int) {
+        dialog(position)
     }
+
+    override fun deleteClick(studentInfo: StudentInfo, position: Int) {
+        var alertDialog = androidx.appcompat.app.AlertDialog.Builder(mainActivity)
+        alertDialog.setTitle("Delete Item")
+        alertDialog.setMessage("Do you want to delete the item?")
+        alertDialog.setCancelable(false)
+        alertDialog.setNegativeButton("No") { _, _ ->
+            alertDialog.setCancelable(true)
+        }
+        alertDialog.setPositiveButton("Yes") { _, _ ->
+            if (array.size == 0){
+                Toast.makeText(mainActivity, "List Is Empty", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                Toast.makeText(
+                    mainActivity,
+                    "The item is  deleted",
+                    Toast.LENGTH_SHORT
+                ).show()
+                dbReference.child(studentInfo.id?:"").removeValue()
+            }
+        }
+        alertDialog.show()    }
+
     override fun itemClicked(position: Int, model: StudentInfo) {
         findNavController().navigate(R.id.action_studentFragment_to_detailFragment,
             bundleOf("name" to model.name,
